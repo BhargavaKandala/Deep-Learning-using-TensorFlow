@@ -1,0 +1,1 @@
+df_train = pd.read_csv('https://storage.googleapis.com/tf-datasets/titanic/train.csv')
