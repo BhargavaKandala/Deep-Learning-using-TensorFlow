@@ -33,3 +33,6 @@ print(len(dataset) * train_size)
 
 train_ds = dataset.take(54)
 print(len(train_ds))
+
+dataset.skip(54)
+    
