@@ -64,5 +64,16 @@ def get_dataset_partition_tf(ds, train_split=0.8, val_split=0.1, test_split=0.1,
 train_ds, val_ds, test_ds = get_dataset_partition_tf(dataset)
 print("Length of Training Dataset",len(train_ds))
 
-train_ds.cache().shuffle(1000).prefetch()
- 
+train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=tf.data.AUTOTUNE)
+val_ds = val_ds.cache().shuffle(1000).prefetch(buffer_size=tf.data.AUTOTUNE)
+test_ds = test_ds.cache().shuffle(1000).prefetch(buffer_size=tf.data.AUTOTUNE)
+
+tf.keras.Sequential([
+    layers.experimental.preprocessing.Resizing(IMAGE_SIZE, IMAGE_SIZE),
+    layers.experimental.preprocessing.Rescaling(1.0/255)
+]) 
+
+data_augmentation = tf.keras.Sequential([
+    layers.experimental.preprocessing.RandomFlip("horizontal_and_vertical"),
+    layers.experimental.preprocessing.RandomRotation(0.2)
+])
